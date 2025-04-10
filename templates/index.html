@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVIDIA API Chatbot</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; max-width: 700px; margin: auto; }
+        textarea { width: 100%; min-height: 80px; margin-bottom: 10px; }
+        button { padding: 10px 15px; cursor: pointer; }
+        .response { margin-top: 20px; padding: 15px; background-color: #f0f0f0; border-radius: 5px; white-space: pre-wrap; /* Preserve whitespace and wrap */ }
+        .error { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>Chat with Llama3 (via NVIDIA API)</h1>
+    <form action="/chat" method="post">
+        <label for="message">Your Message:</label><br>
+        <textarea id="message" name="message" required>{{ user_message or '' }}</textarea><br>
+        <button type="submit">Send</button>
+    </form>
+
+    {% if response %}
+        <div class="response">
+            <strong>Bot:</strong><br>
+            {{ response }}
+        </div>
+    {% endif %}
+
+    {% if error %}
+        <div class="response error">
+            <strong>Error:</strong><br>
+            {{ error }}
+        </div>
+    {% endif %}
+
+</body>
+</html>

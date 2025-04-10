@@ -1,0 +1,4 @@
+# requirements.txt
+Flask>=2.0
+openai>=1.0  # Use a recent version compatible with the API structure
+python-dotenv>=1.0.0 # To load .env file for local development
