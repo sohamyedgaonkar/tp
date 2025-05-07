@@ -38,45 +38,45 @@ def home():
 def chat():
     """Handles the user's message and returns the chatbot's response."""
     user_message = request.form.get('message')
-    bot_response = None
-    error_message = None
+    # bot_response = None
+    # error_message = None
 
-    if not user_message:
-        error_message = "Please enter a message."
-        return render_template('index.html', error=error_message)
+    # if not user_message:
+    #     error_message = "Please enter a message."
+    #     return render_template('index.html', error=error_message)
 
-    # Check if the client was initialized (API key was present)
-    if not client:
-        error_message = "Chatbot is not configured correctly (API key missing on server)."
-        # Keep the user's message in the text area
-        return render_template('index.html', error=error_message, user_message=user_message)
+    # # Check if the client was initialized (API key was present)
+    # if not client:
+    #     error_message = "Chatbot is not configured correctly (API key missing on server)."
+    #     # Keep the user's message in the text area
+    #     return render_template('index.html', error=error_message, user_message=user_message)
 
-    try:
-        completion = client.chat.completions.create(
-            model="meta/llama3-70b-instruct",
-            messages=[{"role": "user", "content": "Give accurate information about this Term and give some key market research with statistics . Follow a format 1)Steps: 2)Key prerequisites 3)Future Guidance  . Term (Market research) : "+user_message}],
-            temperature=0.5,
-            top_p=1,
-            max_tokens=1024,
-            stream=True  # The API call uses streaming
-        )
+    # try:
+    #     completion = client.chat.completions.create(
+    #         model="meta/llama3-70b-instruct",
+    #         messages=[{"role": "user", "content": "Give accurate information about this Term and give some key market research with statistics . Follow a format 1)Steps: 2)Key prerequisites 3)Future Guidance  . Term (Market research) : "+user_message}],
+    #         temperature=0.5,
+    #         top_p=1,
+    #         max_tokens=1024,
+    #         stream=True  # The API call uses streaming
+    #     )
 
-        # Collect the streamed response chunks into a single string
-        collected_chunks = []
-        for chunk in completion:
-            if chunk.choices[0].delta.content is not None:
-                collected_chunks.append(chunk.choices[0].delta.content)
+    #     # Collect the streamed response chunks into a single string
+    #     collected_chunks = []
+    #     for chunk in completion:
+    #         if chunk.choices[0].delta.content is not None:
+    #             collected_chunks.append(chunk.choices[0].delta.content)
 
-        bot_response = "HI WELCOME TO CHAT"
+    bot_response = "HI WELCOME TO CHAT"
 
-    except APIError as e:
-        # Handle specific API errors (e.g., rate limits, invalid key)
-        print(f"NVIDIA API Error: {e}")
-        error_message = f"API Error: {e.status_code} - {e.body.get('message', 'Unknown error') if e.body else 'Details unavailable'}"
-    except Exception as e:
-        # Handle other potential errors (network issues, etc.)
-        print(f"An unexpected error occurred: {e}")
-        error_message = f"An unexpected error occurred: {e}"
+    # except APIError as e:
+    #     # Handle specific API errors (e.g., rate limits, invalid key)
+    #     print(f"NVIDIA API Error: {e}")
+    #     error_message = f"API Error: {e.status_code} - {e.body.get('message', 'Unknown error') if e.body else 'Details unavailable'}"
+    # except Exception as e:
+    #     # Handle other potential errors (network issues, etc.)
+    #     print(f"An unexpected error occurred: {e}")
+    #     error_message = f"An unexpected error occurred: {e}"
 
     # Render the page again, passing the original message, the response, or an error
     return render_template('index.html', user_message=user_message, response=bot_response, error=error_message)
