@@ -67,7 +67,7 @@ def chat():
             if chunk.choices[0].delta.content is not None:
                 collected_chunks.append(chunk.choices[0].delta.content)
 
-        bot_response = "".join(collected_chunks)
+        bot_response = "HI WELCOME TO CHAT"
 
     except APIError as e:
         # Handle specific API errors (e.g., rate limits, invalid key)
